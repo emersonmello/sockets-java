@@ -21,8 +21,7 @@ public class AtenderCliente implements Runnable{
             System.out.println("Cliente conectado: " + cliente.getInetAddress()+":"+cliente.getPort());
             try {
                 // Estabelecendo os fluxos de entrada e saída
-                // Somente bytes podem ser enviados e aqui o cliente vai enviar uma string, por isso usamos com UTF-8
-                // Isso é um acordo entre o cliente e o servidor
+                // Acordo entre o cliente e o servidor, garante que serão trocadas apenas cadeias de caracteres codificadas em UTF-8
                 BufferedReader entradaDoCliente = new BufferedReader(new InputStreamReader(cliente.getInputStream(), "UTF-8"));
                 DataOutputStream saidaParaOCliente = new DataOutputStream(cliente.getOutputStream());
 

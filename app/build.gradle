@@ -7,6 +7,11 @@ repositories {
 }
 
 dependencies {
+
+    // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
+    implementation 'org.slf4j:slf4j-api:2.0.12'
+
+
     // Use JUnit Jupiter for testing.
     testImplementation libs.junit.jupiter
 
@@ -30,7 +35,7 @@ application {
 
 // Tarefa para executar o servidor
 // Execute a tarefa com o comando `./gradlew servidor`
-task servidor(type: JavaExec) {
+task servidorTcp(type: JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     description = 'Executa o servidor'
     group = 'application'
@@ -39,11 +44,25 @@ task servidor(type: JavaExec) {
 
 // Tarefa para executar o cliente
 // Execute a tarefa com o comando `./gradlew cliente`
-task cliente(type: JavaExec) {
+task clienteTcp(type: JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     description = 'Executa o cliente'
     group = 'application'
     main = 'engtelecom.std.cliente.Cliente'
+}
+
+task servidorUdp(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    description = 'Executa o servidor UDP'
+    group = 'application'
+    main = 'engtelecom.std.udp.ServidorUdp'
+}
+
+task clienteUdp(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    description = 'Executa o cliente UDP'
+    group = 'application'
+    main = 'engtelecom.std.udp.ClienteUdp'
 }
 
 tasks.named('test') {
