@@ -4,17 +4,17 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 
-public class ServidorUdp {
+public class UdpServer implements Runnable{
 
-    private int porta;
-    private int bufferSize;
+    private final int porta;
+    private final int bufferSize;
 
-    public ServidorUdp(int porta) {
+    public UdpServer(int porta) {
         this.porta = porta;
         this.bufferSize = 1024;
     }
 
-    private void aguardarMensagem(DatagramSocket socket, byte[] buffer) throws IOException {
+    private String aguardarMensagem(DatagramSocket socket, byte[] buffer) throws IOException {
         // Cria um pacote para receber os dados
         DatagramPacket pacoteRecebido = new DatagramPacket(buffer, buffer.length);
 
@@ -31,30 +31,23 @@ public class ServidorUdp {
         byte[] resposta = r.getBytes();
         DatagramPacket pacoteResposta = new DatagramPacket(resposta, resposta.length, pacoteRecebido.getAddress(), pacoteRecebido.getPort());
         socket.send(pacoteResposta);
+        return mensagem;
     }
 
-    public void iniciarServidor() {
+    @Override
+    public void run() {
         try (DatagramSocket socket = new DatagramSocket(this.porta)) {
             // Cria um buffer de bytes para receber os dados
             byte[] buffer = new byte[bufferSize];
 
             System.out.println("\u2591\u2592\u2592 Servidor UDP iniciado na porta " + this.porta);
             System.out.println("Pressione CTRL+C para encerrar...\n");
-            
-            while(true) {
-                aguardarMensagem(socket, buffer);
+            String mensagem = "";
+            while(!mensagem.equals("fim")) {
+                mensagem = aguardarMensagem(socket, buffer);
             }
         } catch (Exception e) {
             System.err.println("Erro: " + e.getMessage());
         }
-    }
-
-    public static void main(String[] args) {
-     
-        // Cria um servidor UDP na porta 9876
-        ServidorUdp servidor = new ServidorUdp(9876);
-
-        // Inicia o servidor
-        servidor.iniciarServidor();
     }
 }

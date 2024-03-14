@@ -7,10 +7,8 @@ repositories {
 }
 
 dependencies {
-
     // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
     implementation 'org.slf4j:slf4j-api:2.0.12'
-
 
     // Use JUnit Jupiter for testing.
     testImplementation libs.junit.jupiter
@@ -55,14 +53,14 @@ task servidorUdp(type: JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     description = 'Executa o servidor UDP'
     group = 'application'
-    main = 'engtelecom.std.udp.ServidorUdp'
+    main = 'engtelecom.std.udp.AppUdpServer'
 }
 
 task clienteUdp(type: JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     description = 'Executa o cliente UDP'
     group = 'application'
-    main = 'engtelecom.std.udp.ClienteUdp'
+    main = 'engtelecom.std.udp.AppUdpClient'
 }
 
 tasks.named('test') {

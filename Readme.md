@@ -1,4 +1,5 @@
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Java CI with Gradle](https://github.com/std29006/sockets-java/actions/workflows/gradle.yml/badge.svg)](https://github.com/std29006/sockets-java/actions/workflows/gradle.yml)
 
 # Exemplos de sockets TCP e UDP com a API Java I/O
 
