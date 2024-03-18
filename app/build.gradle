@@ -10,6 +10,9 @@ dependencies {
     // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
     implementation 'org.slf4j:slf4j-api:2.0.12'
 
+    // https://mvnrepository.com/artifact/org.slf4j/slf4j-simple
+    implementation 'org.slf4j:slf4j-simple:2.0.12'
+
     // Use JUnit Jupiter for testing.
     testImplementation libs.junit.jupiter
 
@@ -61,6 +64,20 @@ task clienteUdp(type: JavaExec) {
     description = 'Executa o cliente UDP'
     group = 'application'
     main = 'engtelecom.std.udp.AppUdpClient'
+}
+
+task servidorMulticast(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    description = 'Executa o servidor Multicast'
+    group = 'application'
+    main = 'engtelecom.std.multicast.AppMulticastServer'
+}
+
+task clienteMulticast(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    description = 'Executa o cliente Multicast'
+    group = 'application'
+    main = 'engtelecom.std.multicast.AppMulticastClient'
 }
 
 tasks.named('test') {

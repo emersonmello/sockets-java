@@ -111,3 +111,45 @@ Abra um outro terminal e execute uma das linhas abaixo.
 # Passando o IP e porta do servidor como argumentos de linha de comando
 ./gradlew -q clienteUdp --args "localhost 9876"
 ```
+
+## Comunicação Multicast
+
+Neste exemplo, o servidor envia periodicamente uma mensagem com sua hora local para um grupo de clientes que estão escutando em um endereço multicast.
+
+O cliente, para todas interfaces de rede, escuta em um endereço multicast e imprime no console a mensagem recebida do servidor.
+
+![captura de tela do cliente e servidor multicast](img/multicast-captura.png)
+
+### Como executar o servidor Multicast
+
+Abra um terminal e execute a linha abaixo.
+
+```bash
+./gradlew -q servidorMulticast
+```
+
+### Como executar o cliente Multicast
+
+Abra um outro terminal e execute a linha abaixo.
+
+```bash
+./gradlew -q clienteMulticast
+```
+
+Para encerrar a execução do servidor ou do cliente, pressione `Ctrl+C` no terminal onde o programa está sendo executado.
+
+Para ambos os casos, o endereço multicast utilizado é `231.0.0.0` e a porta `8888`. É possível passar outros valores como argumentos de linha de comando.
+
+```bash 
+./gradlew -q servidorMulticast --args "231.0.0.1 8889"
+./gradlew -q clienteMulticast  --args "231.0.0.1 8889"
+```
+
+
+### Referências
+
+- https://en.wikipedia.org/wiki/Multicast_address
+- https://www.iana.org/assignments/multicast-addresses/multicast-addresses.xhtml
+- https://github.com/jppf-grid/JPPF/blob/master/common/src/java/org/jppf/comm/discovery/JPPFBroadcaster.java
+- https://github.com/jppf-grid/JPPF/blob/master/client/src/java/org/jppf/client/JPPFMulticastReceiverThread.java
+- https://github.com/jppf-grid/JPPF/blob/master/common/src/java/org/jppf/comm/discovery/JPPFMulticastReceiver.java
