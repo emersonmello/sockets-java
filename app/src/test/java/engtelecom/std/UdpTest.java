@@ -24,7 +24,7 @@ public class UdpTest {
     public void envioERecimentoComSucesso(){
         String mensagem = "Olá, eu sou o cliente UDP!";
         String resposta = udpClient.comunicacao(mensagem);
-        assertEquals("Olá, eu sou o servidor UDP", resposta);
+        assertEquals("Olá, eu sou servidor UDP!", resposta);
     }
 
     @AfterAll

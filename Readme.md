@@ -65,7 +65,7 @@ Abra um outro terminal e execute uma das linhas abaixo.
 # Tentará conectar na porta 12345 na localhost
 ./gradlew -q clienteTcp
 
-# Passando o IP e porta do servidor como argumentos de linha de comando
+# Passando o IP e porta do tcp como argumentos de linha de comando
 ./gradlew -q clienteTcp --args "localhost 12345"
 ```
 
@@ -108,7 +108,7 @@ Abra um outro terminal e execute uma das linhas abaixo.
 # Tentará conectar na porta 9876 na localhost
 ./gradlew -q clienteUdp
 
-# Passando o IP e porta do servidor como argumentos de linha de comando
+# Passando o IP e porta do tcp como argumentos de linha de comando
 ./gradlew -q clienteUdp --args "localhost 9876"
 ```
 

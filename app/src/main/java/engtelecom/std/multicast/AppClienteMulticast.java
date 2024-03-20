@@ -6,7 +6,6 @@ import java.net.InetSocketAddress;
 import java.net.MulticastSocket;
 import java.net.NetworkInterface;
 import java.util.Collections;
-import java.util.Enumeration;
 import java.util.logging.Logger;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,22 +16,21 @@ import java.net.Inet6Address;
  * 
  * Recebe a hora atual de um grupo multicast.
  */
-public class AppMulticastClient {
+public class AppClienteMulticast {
 
     // Para exibir mensagens de log
-    private static final Logger logger = Logger.getLogger(AppMulticastClient.class.getName());
+    private static final Logger logger = Logger.getLogger(AppClienteMulticast.class.getName());
 
     private final int BUFFER_SIZE;
-    private String enderecoMulticast;
+    private String endereco;
     private int porta;
-    private static InetAddress mcastaddr;
-    private List<InetAddress> interfaces;
+    private List<InetAddress> interfacesDeRede;
 
-    public AppMulticastClient(String enderecoMulticast, int porta) {
+    public AppClienteMulticast(String endereco, int porta) {
         this.BUFFER_SIZE = 256;
-        this.enderecoMulticast = enderecoMulticast;
+        this.endereco = endereco;
         this.porta = porta;
-        this.interfaces = new ArrayList<>();
+        this.interfacesDeRede = new ArrayList<>();
     }
 
     /**
@@ -41,21 +39,21 @@ public class AppMulticastClient {
      * 
      * @return
      */
-    public List<InetAddress> getNetworkInterfaces() {
+    public List<InetAddress> obterInterfacesDeRede() {
         List<InetAddress> interfaces = new ArrayList<>();
         try {
             logger.info("Obtendo interfaces de rede...");
-            Enumeration<NetworkInterface> nets = NetworkInterface.getNetworkInterfaces();
-            for (NetworkInterface netint : Collections.list(nets)) {
-                for (InetAddress inetAddress : Collections.list(netint.getInetAddresses())) {
+            for (NetworkInterface networkInterface : Collections.list(NetworkInterface.getNetworkInterfaces())) {
+                for (InetAddress inetAddress : Collections.list(networkInterface.getInetAddresses())) {
+                    // Não incluir loopback e IPv6ß
                     if (inetAddress.isLoopbackAddress() || inetAddress instanceof Inet6Address) {
                         continue;
                     }
                     interfaces.add(inetAddress);
-                    System.out.printf("Display name: %s\tInetAddress: %s\n", netint.getDisplayName(), inetAddress);
+                    String m = String.format("Nome: %s\tEndereço: %s\n", networkInterface.getDisplayName(), inetAddress);
+                    logger.info(m);
                 }
             }
-            logger.info("Interfaces de rede obtidas.\n");
         } catch (Exception e) {
             logger.severe("Erro: " + e.getMessage());
         }
@@ -67,35 +65,35 @@ public class AppMulticastClient {
      */
     public void iniciar() {
         System.out.println("Cliente Multicast iniciado.");
-        this.interfaces = getNetworkInterfaces();
+        this.interfacesDeRede = obterInterfacesDeRede();
 
-        try (MulticastSocket s = new MulticastSocket(this.porta)) {
+        try (MulticastSocket multicastSocket = new MulticastSocket(this.porta)) {
 
             // Cria o endereço multicast
-            mcastaddr = InetAddress.getByName(this.enderecoMulticast);
+            InetAddress enderecoMulticast = InetAddress.getByName(this.endereco);
             // Cria o grupo multicast
-            InetSocketAddress group = new InetSocketAddress(mcastaddr, this.porta);
+            InetSocketAddress grupo = new InetSocketAddress(enderecoMulticast, this.porta);
 
             // Entra no grupo multicast para todas as interfaces
-            for (InetAddress inetAddress : this.interfaces) {
-                s.joinGroup(group, NetworkInterface.getByInetAddress(inetAddress));
+            for (InetAddress inetAddress : this.interfacesDeRede) {
+                multicastSocket.joinGroup(grupo, NetworkInterface.getByInetAddress(inetAddress));
             }
 
             byte[] buffer = new byte[this.BUFFER_SIZE];
             
             // Cria o pacote para receber a mensagem
-            DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
+            DatagramPacket datagramPacket = new DatagramPacket(buffer, buffer.length);
 
             // Vai receber 5 mensagens do grupo multicast e exibir na tela
             for (int i = 0; i < 5; i++) {
-                s.receive(packet);
-                String received = new String(packet.getData());
-                System.out.printf("Servidor: %s enviou a mensagem: %s\n", packet.getAddress(), received.trim());
+                multicastSocket.receive(datagramPacket);
+                String mensagemRecebida = new String(datagramPacket.getData());
+                System.out.printf("Servidor: %s enviou a mensagem: %s\n", datagramPacket.getAddress(), mensagemRecebida.trim());
             }
 
             // Deixa o grupo multicast para todas as interfaces
-            for (InetAddress inetAddress : this.interfaces) {
-                s.leaveGroup(group, NetworkInterface.getByInetAddress(inetAddress));
+            for (InetAddress inetAddress : this.interfacesDeRede) {
+                multicastSocket.leaveGroup(grupo, NetworkInterface.getByInetAddress(inetAddress));
             }
         } catch (Exception e) {
             logger.severe("Erro: " + e.getMessage());
@@ -111,7 +109,7 @@ public class AppMulticastClient {
             porta = Integer.parseInt(args[1]);
         }
 
-        AppMulticastClient client = new AppMulticastClient(enderecoMulticast, porta);
-        client.iniciar();
+        AppClienteMulticast appClienteMulticast = new AppClienteMulticast(enderecoMulticast, porta);
+        appClienteMulticast.iniciar();
     }
 }

@@ -34,50 +34,58 @@ application {
     mainClass = 'engtelecom.std.App'
 }
 
-// Tarefa para executar o servidor
-// Execute a tarefa com o comando `./gradlew servidor`
-task servidorTcp(type: JavaExec) {
+// Tarefa para executar o tcp
+// Execute a tarefa com o comando `./gradlew tcp`
+tasks.register('servidorTcp', JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
-    description = 'Executa o servidor'
+    description = 'Executa o tcp'
     group = 'application'
-    main = 'engtelecom.std.servidor.Servidor'
+    mainClass = 'engtelecom.std.tcp.AppServidorTcp'
 }
 
 // Tarefa para executar o cliente
 // Execute a tarefa com o comando `./gradlew cliente`
-task clienteTcp(type: JavaExec) {
+tasks.register('clienteTcp', JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     description = 'Executa o cliente'
     group = 'application'
-    main = 'engtelecom.std.cliente.Cliente'
+    mainClass = 'engtelecom.std.tcp.AppClienteTcp'
 }
 
-task servidorUdp(type: JavaExec) {
+// Tarefa para executar o servidor UDP
+// Execute a tarefa com o comando `./gradlew servidorUdp`
+tasks.register('servidorUdp', JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
-    description = 'Executa o servidor UDP'
+    description = 'Executa o tcp UDP'
     group = 'application'
-    main = 'engtelecom.std.udp.AppUdpServer'
+    mainClass = 'engtelecom.std.udp.AppUdpServer'
 }
 
-task clienteUdp(type: JavaExec) {
+// Tarefa para executar o cliente UDP
+// Execute a tarefa com o comando `./gradlew clienteUdp`
+tasks.register('clienteUdp', JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     description = 'Executa o cliente UDP'
     group = 'application'
-    main = 'engtelecom.std.udp.AppUdpClient'
+    mainClass = 'engtelecom.std.udp.AppUdpClient'
 }
 
-task servidorMulticast(type: JavaExec) {
+// Tarefa para executar o servidor Multicast
+// Execute a tarefa com o comando `./gradlew servidorMulticast`
+tasks.register('servidorMulticast', JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
-    description = 'Executa o servidor Multicast'
+    description = 'Executa o tcp Multicast'
     group = 'application'
-    main = 'engtelecom.std.multicast.AppMulticastServer'
+    mainClass = 'engtelecom.std.multicast.AppServidorMulticast'
 }
 
-task clienteMulticast(type: JavaExec) {
+// Tarefa para executar o cliente Multicast
+// Execute a tarefa com o comando `./gradlew clienteMulticast`
+tasks.register('clienteMulticast', JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     description = 'Executa o cliente Multicast'
     group = 'application'
-    main = 'engtelecom.std.multicast.AppMulticastClient'
+    mainClass = 'engtelecom.std.multicast.AppClienteMulticast'
 }
 
 tasks.named('test') {

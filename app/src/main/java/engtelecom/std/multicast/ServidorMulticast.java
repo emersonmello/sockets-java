@@ -15,15 +15,15 @@ import org.slf4j.LoggerFactory;
  * 
  * Envia a hora atual em intervalos regulares para um grupo multicast.
  */
-public class MulticastTimeServer implements Runnable {
+public class ServidorMulticast implements Runnable {
 
-    private static Logger logger = LoggerFactory.getLogger(MulticastTimeServer.class);
+    private static Logger logger = LoggerFactory.getLogger(ServidorMulticast.class);
     private final int INTERVALO = 1000;
     private final int BUFFER_SIZE;
     private int porta;
     private InetAddress enderecoMulticast;
 
-    public MulticastTimeServer(String enderecoMulticast, int porta) throws UnknownHostException, SocketException {
+    public ServidorMulticast(String enderecoMulticast, int porta) throws UnknownHostException, SocketException {
         this.enderecoMulticast = InetAddress.getByName(enderecoMulticast);
         this.porta = porta;
         this.BUFFER_SIZE = 256;
@@ -33,16 +33,15 @@ public class MulticastTimeServer implements Runnable {
     public void run() {
 
         logger.info("Servidor de hora Multicast iniciado.");
-        try (DatagramSocket socket = new DatagramSocket()) {
+        try (DatagramSocket datagramSocket = new DatagramSocket()) {
 
             while (true) {
                 String dataHora = LocalDateTime.now().toString();
-                byte[] buffer = new byte[BUFFER_SIZE];
-                buffer = dataHora.getBytes();
+                byte[] buffer =  dataHora.getBytes();
 
-                DatagramPacket packet = new DatagramPacket(buffer, buffer.length, enderecoMulticast, porta);
-                socket.send(packet);
-                System.out.println("publicado >>> " + dataHora);
+                DatagramPacket datagramPacket = new DatagramPacket(buffer, buffer.length, enderecoMulticast, porta);
+                datagramSocket.send(datagramPacket);
+                System.out.println(">>> " + dataHora);
 
                 Thread.sleep(INTERVALO);
             }

@@ -9,10 +9,10 @@ import java.util.logging.Logger;
  * 
  * Envia a hora atual em intervalos regulares para um grupo multicast.
  */
-public class AppMulticastServer {
+public class AppServidorMulticast {
 
     // Para exibir mensagens de log
-    private static Logger logger = Logger.getLogger(AppMulticastServer.class.getName());
+    private static Logger logger = Logger.getLogger(AppServidorMulticast.class.getName());
 
     public static void main(String[] args) {
         String enderecoMulticast = "231.0.0.0";
@@ -24,9 +24,9 @@ public class AppMulticastServer {
         }
 
         try {
-            MulticastTimeServer server = new MulticastTimeServer(enderecoMulticast, porta);
-            // Inicia a thread do servidor de hora multicast
-            new Thread(server).start();
+            ServidorMulticast servidorMulticast = new ServidorMulticast(enderecoMulticast, porta);
+            // Inicia a thread do tcp de hora multicast
+            new Thread(servidorMulticast).start();
 
         } catch (UnknownHostException | SocketException e) {
             logger.severe("Erro: " + e.getMessage());
