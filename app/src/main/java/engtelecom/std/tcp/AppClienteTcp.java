@@ -55,7 +55,8 @@ public class AppClienteTcp {
 
         String enderecoServidor = "localhost";
         int porta = 12345;
-        // Verifica se o usuário informou o endereço e a porta do tcp como argumentos
+        
+        // Verifica se o usuário informou o endereço e a porta como argumentos
         if (args.length == 2) {
             enderecoServidor = args[0];
             porta = Integer.parseInt(args[1]);

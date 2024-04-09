@@ -22,6 +22,11 @@ public class AppServidorTcp {
         System.out.println("\u2591\u2592\u2592 Iniciando o tcp \u2592\u2592\u2591");
 
         int porta = 12345;
+
+        // Verifica se o usuário informou a porta como argumento
+        if (args.length == 1) {
+            porta = Integer.parseInt(args[0]);
+        }
         
         try (ServerSocket serverSocket = new ServerSocket(porta)) {
             

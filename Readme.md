@@ -91,7 +91,7 @@ sequenceDiagram
 7. Servidor envia datagrama
 8. Cliente imprime no console
 
-### Como executar o servidor TCP
+### Como executar o servidor UDP
 
 Abra um terminal e execute a linha abaixo.
 
@@ -99,7 +99,7 @@ Abra um terminal e execute a linha abaixo.
 ./gradlew -q servidorUdp
 ```
 
-### Como executar o cliente TCP
+### Como executar o cliente UDP
 
 Abra um outro terminal e execute uma das linhas abaixo.
 

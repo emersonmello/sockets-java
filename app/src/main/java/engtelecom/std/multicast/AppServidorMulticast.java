@@ -18,6 +18,7 @@ public class AppServidorMulticast {
         String enderecoMulticast = "231.0.0.0";
         int porta = 8888;
 
+        // Verifica se o usuário informou o endereço e a porta como argumentos
         if (args.length == 2) {
             enderecoMulticast = args[0];
             porta = Integer.parseInt(args[1]);
