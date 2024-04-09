@@ -7,12 +7,6 @@ repositories {
 }
 
 dependencies {
-    // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
-    implementation 'org.slf4j:slf4j-api:2.0.12'
-
-    // https://mvnrepository.com/artifact/org.slf4j/slf4j-simple
-    implementation 'org.slf4j:slf4j-simple:2.0.12'
-
     // Use JUnit Jupiter for testing.
     testImplementation libs.junit.jupiter
 
@@ -25,7 +19,7 @@ dependencies {
 // Apply a specific Java toolchain to ease working on different environments.
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
+        languageVersion = JavaLanguageVersion.of(17)
     }
 }
 

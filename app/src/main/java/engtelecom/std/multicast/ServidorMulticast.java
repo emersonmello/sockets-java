@@ -7,9 +7,7 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.time.LocalDateTime;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import java.util.logging.Logger;
 /**
  * Servidor de hora Multicast.
  * 
@@ -17,16 +15,14 @@ import org.slf4j.LoggerFactory;
  */
 public class ServidorMulticast implements Runnable {
 
-    private static Logger logger = LoggerFactory.getLogger(ServidorMulticast.class);
+    private static final Logger logger = Logger.getLogger(ServidorMulticast.class.getName());
     private final int INTERVALO = 1000;
-    private final int BUFFER_SIZE;
     private int porta;
     private InetAddress enderecoMulticast;
 
     public ServidorMulticast(String enderecoMulticast, int porta) throws UnknownHostException, SocketException {
         this.enderecoMulticast = InetAddress.getByName(enderecoMulticast);
         this.porta = porta;
-        this.BUFFER_SIZE = 256;
     }
 
     @Override
@@ -46,7 +42,7 @@ public class ServidorMulticast implements Runnable {
                 Thread.sleep(INTERVALO);
             }
         } catch (Exception e) {
-            logger.error("Erro: " + e.getMessage());
+            logger.severe("Erro: " + e.getMessage());
         }
     }
 }
