@@ -28,20 +28,20 @@ application {
     mainClass = 'engtelecom.std.App'
 }
 
-// Tarefa para executar o tcp
-// Execute a tarefa com o comando `./gradlew tcp`
+// Tarefa para executar o servidor TCP
+// Execute a tarefa com o comando `./gradlew servidorTcp`
 tasks.register('servidorTcp', JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
-    description = 'Executa o tcp'
+    description = 'Executa o servidor TCP'
     group = 'application'
     mainClass = 'engtelecom.std.tcp.AppServidorTcp'
 }
 
 // Tarefa para executar o cliente
-// Execute a tarefa com o comando `./gradlew cliente`
+// Execute a tarefa com o comando `./gradlew clienteTcp`
 tasks.register('clienteTcp', JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
-    description = 'Executa o cliente'
+    description = 'Executa o cliente TCP'
     group = 'application'
     mainClass = 'engtelecom.std.tcp.AppClienteTcp'
 }
@@ -50,7 +50,7 @@ tasks.register('clienteTcp', JavaExec) {
 // Execute a tarefa com o comando `./gradlew servidorUdp`
 tasks.register('servidorUdp', JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
-    description = 'Executa o tcp UDP'
+    description = 'Executa o servidor UDP'
     group = 'application'
     mainClass = 'engtelecom.std.udp.AppUdpServer'
 }
@@ -68,7 +68,7 @@ tasks.register('clienteUdp', JavaExec) {
 // Execute a tarefa com o comando `./gradlew servidorMulticast`
 tasks.register('servidorMulticast', JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
-    description = 'Executa o tcp Multicast'
+    description = 'Executa o servidor Multicast'
     group = 'application'
     mainClass = 'engtelecom.std.multicast.AppServidorMulticast'
 }
